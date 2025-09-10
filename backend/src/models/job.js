@@ -21,7 +21,8 @@ const jobSchema = new mongoose.Schema(
     },
     experienceLevel: {
       type: Number,
-      required: true,
+      required: false,
+      default:0,
     },
     location: {
       type: String,

@@ -20,7 +20,7 @@ export const createJob = async (userId, data) => {
     salary,
     location,
     jobType,
-    experienceLevel,
+   experienceLevel,
     position,
     company: companyId,
     created_by: userId,
