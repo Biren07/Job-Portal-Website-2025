@@ -8,6 +8,7 @@ import applicationRoute from "./routes/applicationRoute.js"
 import companyRoute from "./routes/companyRoute.js";
 import  jobRoute from "./routes/jobRoute.js";
 import aiRoute from "./routes/aiRoute.js";
+import jobsave from "./routes/saveJobRoute.js"
 dotenv.config({});
 
 const app = express();
@@ -26,11 +27,12 @@ app.use(cors(corsOptions));
 const PORT = process.env.PORT || 3000;
 
 // api's
-app.use("/api/users", userRoute);
+app.use("/api/user", userRoute);
 app.use("/api/application", applicationRoute);
 app.use("/api/company", companyRoute);
 app.use("/api/job", jobRoute);
 app.use("/api/ai",aiRoute);
+app.use("/api/savejob",jobsave)
 
 
 app.listen(PORT, () => {
