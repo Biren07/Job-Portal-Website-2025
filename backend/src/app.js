@@ -18,9 +18,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 const corsOptions = {
-  origin: "http://localhost:5173",
-  credentials: true,
+  origin: [
+    "http://localhost:5173", // dev
+    "https://jobportal-eabz.vercel.app" // production frontend
+  ],
+  credentials: true, // allow cookies
 };
+
+app.use(cors(corsOptions));
+
 
 app.use(cors(corsOptions));
 
