@@ -35,7 +35,7 @@ export const saveJob = async (req, res) => {
   }
 };
 
-// Remove a saved job
+
 export const removeSavedJob = async (req, res) => {
   try {
     const { jobId } = req.params;
@@ -45,8 +45,8 @@ export const removeSavedJob = async (req, res) => {
     }
 
     const deleted = await SavedJob.findOneAndDelete({
-      userId: req.id, // from auth middleware
-      jobId: new mongoose.Types.ObjectId(jobId), // <--- fix here
+      userId: req.id, 
+      jobId: new mongoose.Types.ObjectId(jobId),
     });
 
     if (!deleted) {

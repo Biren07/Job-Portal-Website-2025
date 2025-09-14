@@ -1,7 +1,6 @@
 import chatGemini from "../utils/chatGemini.js";
 import generateInterviewQuestions from "../utils/interviewGemini.js";
 
-// Generate interview questions
 export const startInterview = async (req, res) => {
   const { role, skills, bio } = req.body;
 
@@ -10,10 +9,11 @@ export const startInterview = async (req, res) => {
   }
 
   try {
-    // Generate questions (returns an array of strings)
-    const questionsArray = await generateInterviewQuestions({ role, skills, bio });
-
-    // Convert array to numbered string
+    const questionsArray = await generateInterviewQuestions({
+      role,
+      skills,
+      bio,
+    });
     const questionsText = questionsArray.join("\n");
 
     res.json({ questions: questionsText });
@@ -27,7 +27,6 @@ export const startInterview = async (req, res) => {
   }
 };
 
-// Chat with AI
 export const chatWithAI = async (req, res) => {
   const { userMessage } = req.body;
 
@@ -38,7 +37,6 @@ export const chatWithAI = async (req, res) => {
   try {
     const prompt = `You are a helpful assistant. Answer this: ${userMessage}`;
 
-    // Call Gemini AI
     const aiResponse = await chatGemini(prompt);
 
     res.json({ reply: aiResponse });

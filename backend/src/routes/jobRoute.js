@@ -9,9 +9,8 @@ import {
 
 const router = express.Router();
 
-
 // Create a new job (admin only)
-router.post("/post",auth, postJob);
+router.post("/post", auth, postJob);
 
 // Get all jobs (students)
 router.get("/get", auth, getAllJobs);

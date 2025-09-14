@@ -12,6 +12,6 @@ router.get("/", auth, getSavedJobs);
 
 router.post("/", auth, saveJob);
 
-router.delete("/:jobId",auth,removeSavedJob);
+router.delete("/:jobId", auth, removeSavedJob);
 
 export default router;
