@@ -11,7 +11,7 @@ const SavedJob = () => {
   // Fetch all saved jobs
   const fetchSavedJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/savejob", {
+      const res = await axios.get("https://job-portal-website-2025.onrender.com/api/savejob", {
         withCredentials: true, // 🔑 send cookies with request
       });
 

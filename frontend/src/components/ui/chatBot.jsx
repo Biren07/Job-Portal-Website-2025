@@ -30,7 +30,7 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("http://localhost:8000/api/ai/chat", {
+      const res = await axios.post("https://job-portal-website-2025.onrender.com/api/ai/chat", {
         userMessage,
       });
       const botReply = res.data.reply;
