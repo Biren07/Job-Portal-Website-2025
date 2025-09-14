@@ -52,7 +52,7 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
     }
     try {
       setLoading(true);
-      const res = await axios.post(
+      const res = await axios.put(
         `${USER_API_END_POINT}/profile/update`,
         formData,
         {

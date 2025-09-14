@@ -8,12 +8,12 @@ const developers = [
     role: "MERN Stack Developer",
     photo:
       "../../public/Birendra Dhami.png",
-    linkedin: "https://linkedin.com/in/alicejohnson",
+    linkedin: "https://www.linkedin.com/in/birendra-c-ingh-dhami-6264b7279/",
   },
   {
     name: "Ramesh Saud",
     role: "Web Designer",
-    photo: "../../public/WhatsApp Image 2025-08-15 at 20.27.00_2a44ff10.jpg",
+    photo: "../../public/WhatsApp Image 2025-09-13 at 13.23.30_a6b0fde0.jpg",
     linkedin: "https://linkedin.com/in/bobsmith",
   },
 ];
@@ -57,7 +57,7 @@ const About = () => {
                 <img
                   src={photo}
                   alt={name}
-                  className="w-40 h-30 rounded-full object-cover mb-3 border-2 border-gray-300 dark:border-gray-600"
+                  className="w-40 h-40 rounded-full object-cover mb-3 border-2 border-gray-300 dark:border-gray-600"
                 />
               ) : (
                 <UserCircle className="w-24 h-24 text-gray-400 mb-3" />
@@ -66,7 +66,7 @@ const About = () => {
                 {name}
               </h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 flex items-center gap-1">
-                <UserCircle size={14} />
+                <UserCircle/>
                 {role}
               </p>
               <a

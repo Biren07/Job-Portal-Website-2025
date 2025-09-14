@@ -2,16 +2,14 @@ import React, { useState } from "react";
 import Navbar from "./shared/Navbar";
 import { Avatar, AvatarImage } from "./ui/avatar";
 import { Button } from "./ui/button";
-import { Contact, Mail, Pen, Bookmark } from "lucide-react"; // Add Bookmark icon
+import { Contact, Mail, Pen, Bookmark } from "lucide-react";
 import { Badge } from "./ui/badge";
 import { Label } from "./ui/label";
 import AppliedJobTable from "./AppliedJobTable";
 import UpdateProfileDialog from "./UpdateProfileDialog";
 import { useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom"; // Import navigate
+import { useNavigate } from "react-router-dom";
 import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
-
-const isResume = true;
 
 const Profile = () => {
   useGetAppliedJobs();
@@ -20,84 +18,96 @@ const Profile = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-300 mx-auto bg-white border border-gray-200 rounded-2xl px-10 py-6">
-        <div className="flex justify-between">
-          <div className="flex items-center gap-4">
-            <Avatar className="h-40 w-40">
+
+      <div className="max-w-5xl mx-auto bg-white border border-gray-200 rounded-2xl shadow-sm px-10 py-8 mt-8">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
+          <div className="flex items-center gap-6">
+            <Avatar className="h-28 w-28 border-2 border-gray-200">
               <AvatarImage
-                src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg"
-                alt="profile"
+                src={
+                  user?.profile?.profilePhoto ||
+                  "https://via.placeholder.com/150"
+                }
+                alt={user?.fullname || "profile"}
               />
             </Avatar>
             <div>
-              <h1 className="font-medium text-xl">{user?.fullname}</h1>
-              <p>{user?.profile?.bio}</p>
+              <h1 className="text-2xl font-semibold">{user?.fullname}</h1>
+              <p className="text-gray-600 mt-1">
+                {user?.profile?.bio || "No bio added yet."}
+              </p>
             </div>
           </div>
-          <div className="flex flex-col gap-2">
+
+          <div className="flex flex-col sm:flex-row gap-3">
             <Button
               onClick={() => setOpen(true)}
-              className="text-right"
               variant="outline"
+              className="gap-2"
             >
-              <Pen /> Edit
+              <Pen size={16} /> Edit Profile
             </Button>
-            {/* ✅ Saved Jobs Button */}
             <Button
               onClick={() => navigate("/saved-jobs")}
-              className="text-right"
               variant="secondary"
+              className="gap-2"
             >
-              <Bookmark className="mr-2" /> Saved Jobs
+              <Bookmark size={16} /> Saved Jobs
             </Button>
           </div>
         </div>
 
-        <div className="my-5">
-          <div className="flex items-center gap-3 my-2">
-            <Mail />
+        <div className="mt-8 grid sm:grid-cols-2 gap-4 text-gray-700">
+          <div className="flex items-center gap-3">
+            <Mail className="text-gray-500" size={18} />
             <span>{user?.email}</span>
           </div>
-          <div className="flex items-center gap-3 my-2">
-            <Contact />
+          <div className="flex items-center gap-3">
+            <Contact className="text-gray-500" size={18} />
             <span>{user?.phoneNumber}</span>
           </div>
         </div>
 
-        <div className="my-5">
-          <h1>Skills</h1>
-          <div className="flex items-center gap-1">
-            {user?.profile?.skills.length !== 0 ? (
+        <div className="mt-8">
+          <h2 className="text-lg font-semibold mb-3">Skills</h2>
+          <div className="flex flex-wrap gap-2">
+            {user?.profile?.skills?.length > 0 ? (
               user?.profile?.skills.map((item, index) => (
-                <Badge key={index}>{item}</Badge>
+                <Badge
+                  key={index}
+                  variant="outline"
+                  className="px-3 py-1 text-sm"
+                >
+                  {item}
+                </Badge>
               ))
             ) : (
-              <span>NA</span>
+              <span className="text-gray-500">No skills added.</span>
             )}
           </div>
         </div>
 
-        <div className="grid w-full max-w-sm items-center gap-1.5">
-          <Label className="text-md font-bold">Resume</Label>
-          {isResume ? (
+        <div className="mt-8">
+          <Label className="text-md font-semibold">Resume</Label>
+          {user?.profile?.resume ? (
             <a
               target="_blank"
               rel="noreferrer"
               href={user?.profile?.resume}
-              className="text-blue-500 w-full hover:underline cursor-pointer"
+              className="block mt-1 text-blue-600 hover:underline"
             >
               {user?.profile?.resumeOriginalName}
             </a>
           ) : (
-            <span>NA</span>
+            <p className="text-gray-500">No resume uploaded.</p>
           )}
         </div>
       </div>
 
-      <div className="max-w-4xl mx-auto bg-white rounded-2xl mt-6 p-4">
-        <h1 className="font-bold text-lg my-5">Applied Jobs</h1>
+      <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-sm mt-8 p-6">
+        <h2 className="text-xl font-bold mb-4">Applied Jobs</h2>
         <AppliedJobTable />
       </div>
 

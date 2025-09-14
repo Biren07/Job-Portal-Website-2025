@@ -12,16 +12,16 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  const token = localStorage.getItem("token");
+  // ✅ Removed localStorage.getItem("token")
 
   // Check saved status only for Jobs page
   useEffect(() => {
-    if (!token || isSavedPage) return;
+    if (isSavedPage) return;
 
     const fetchSavedStatus = async () => {
       try {
         const res = await axios.get("http://localhost:8000/api/savejob", {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true, // 🔑 send cookies
         });
 
         const isAlreadySaved = res.data.some((savedJob) => {
@@ -36,34 +36,29 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
     };
 
     fetchSavedStatus();
-  }, [job._id, token, isSavedPage]);
+  }, [job._id, isSavedPage]);
 
   // Save / Remove job
   const toggleSave = async () => {
-    if (!token) {
-      toast.error("You must be logged in to save a job.");
-      return;
-    }
-
     setLoading(true);
     try {
       if (!saved) {
         // Save job
         await axios.post(
           "http://localhost:8000/api/savejob",
-          { jobId: job._id }, // send Job _id
-          { headers: { Authorization: `Bearer ${token}` } }
+          { jobId: job._id },
+          { withCredentials: true } // 🔑 send cookies
         );
         setSaved(true);
         toast.success("Job saved successfully!");
       } else {
         // Remove job
         await axios.delete(`http://localhost:8000/api/savejob/${job._id}`, {
-          headers: { Authorization: `Bearer ${token}` },
+          withCredentials: true, // 🔑 send cookies
         });
-        setSaved(false); // toggle local state
+        setSaved(false);
         toast.success("Job removed from saved list!");
-        if (isSavedPage && onRemove) onRemove(); // remove from SavedJobs page
+        if (isSavedPage && onRemove) onRemove();
       }
     } catch (err) {
       console.error("Toggle save error:", err.response?.data || err.message);
@@ -142,17 +137,13 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
           <Button
             className="bg-red-600 text-white"
             onClick={async () => {
-              if (!token) return toast.error("You must be logged in.");
-
               try {
                 await axios.delete(
                   `http://localhost:8000/api/savejob/${job._id}`,
-                  {
-                    headers: { Authorization: `Bearer ${token}` },
-                  }
+                  { withCredentials: true } // 🔑 send cookies
                 );
                 toast.success("Job removed from saved list!");
-                if (onRemove) onRemove(); 
+                if (onRemove) onRemove();
               } catch (err) {
                 console.error(
                   "Remove saved job error:",

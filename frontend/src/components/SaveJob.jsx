@@ -7,22 +7,16 @@ import toast, { Toaster } from "react-hot-toast";
 const SavedJob = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
-  const token = localStorage.getItem("token");
 
   // Fetch all saved jobs
   const fetchSavedJobs = async () => {
-    if (!token) {
-      toast.error("You must be logged in to view saved jobs.");
-      setLoading(false);
-      return;
-    }
-
     try {
       const res = await axios.get("http://localhost:8000/api/savejob", {
-        headers: { Authorization: `Bearer ${token}` },
+        withCredentials: true, // 🔑 send cookies with request
       });
 
-      setSavedJobs(res.data.map((item) => item.jobId)); // populate jobId
+      // API returns [{ jobId: {...} }, { jobId: {...} }]
+      setSavedJobs(res.data.map((item) => item.jobId));
     } catch (err) {
       console.error(
         "Error fetching saved jobs:",

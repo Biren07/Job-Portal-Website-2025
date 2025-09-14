@@ -32,7 +32,7 @@ const Navbar = () => {
   };
 
   return (
-    <div className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500  max-w-300  px-2 mx-auto sm:max-w-4xl mx-auto  sticky top-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800 shadow-sm transition rounded-lg ">
+    <div className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500  max-w-300  px-2 mx-auto sm:max-w-4xl sticky top-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800 shadow-sm transition rounded-lg ">
       <div className="flex items-center justify-between  h-16  text-gray-800 dark:text-gray-100">
         <div>
           <Link
