@@ -21,25 +21,27 @@ export const login = async (req, res) => {
   try {
     const { user, token } = await loginUser(req.body);
 
-    return res
-      .status(200)
-      .cookie("token", token, {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "development",
-        sameSite: "strict",
-      })
-      .json({
-        message: `Welcome back ${user.fullname}`,
-        user: {
-          _id: user._id,
-          fullname: user.fullname,
-          email: user.email,
-          phoneNumber: user.phoneNumber,
-          role: user.role,
-          profile: user.profile,
-        },
-        success: true,
-      });
+   return res
+  .status(200)
+  .cookie("token", token, {
+    httpOnly: true,
+    secure: process.env.NODE_ENV !== "development",
+    sameSite: "None", 
+    maxAge: 7 * 24 * 60 * 60 * 1000, 
+  })
+  .json({
+    message: `Welcome back ${user.fullname}`,
+    user: {
+      _id: user._id,
+      fullname: user.fullname,
+      email: user.email,
+      phoneNumber: user.phoneNumber,
+      role: user.role,
+      profile: user.profile,
+    },
+    success: true,
+  });
+
   } catch (error) {
     return res.status(400).json({ message: error.message, success: false });
   }
