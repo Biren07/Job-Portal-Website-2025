@@ -16,14 +16,12 @@ const Jobs = () => {
     }
 
     const filteredJobs = allJobs.filter((job) => {
-      // Location filter
       const matchLocation = searchedQuery.location
         ? job.location
             ?.toLowerCase()
             .includes(searchedQuery.location.toLowerCase())
         : true;
 
-      // jobTitle filter
       const matchTechnology = (() => {
         if (!searchedQuery.technology) return true;
 
@@ -43,7 +41,6 @@ const Jobs = () => {
         return false;
       })();
 
-      // Experience filter
       const matchExperience = (() => {
         if (!searchedQuery.experience) return true;
 
@@ -67,12 +64,10 @@ const Jobs = () => {
     <div>
       <Navbar />
       <div className="max-w-7xl mx-auto mt-5 flex gap-5 h-[88vh]">
-        {/* Filter Panel */}
         <div className="w-1/5 h-full overflow-y-auto bg-white rounded-md shadow-md p-4">
           <FilterCard />
         </div>
 
-        {/* Jobs List */}
         <div className="flex-1 overflow-y-auto">
           {filterJobs.length === 0 ? (
             <span>No jobs found</span>

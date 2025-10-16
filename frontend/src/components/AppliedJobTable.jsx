@@ -13,7 +13,6 @@ import { useSelector } from "react-redux";
 import useGetAppliedJobs from "@/hooks/useGetAppliedJobs";
 
 const AppliedJobTable = () => {
-  
   useGetAppliedJobs();
 
   const { allAppliedJobs } = useSelector((store) => store.job);

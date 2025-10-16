@@ -6,14 +6,13 @@ const developers = [
   {
     name: "Birendra Singh Dhami",
     role: "MERN Stack Developer",
-    photo:
-      "../../public/Birendra Dhami.png",
+    photo: "/Birendra Dhami.png",
     linkedin: "https://www.linkedin.com/in/birendra-c-ingh-dhami-6264b7279/",
   },
   {
     name: "Ramesh Saud",
     role: "Web Designer",
-    photo: "../../public/WhatsApp Image 2025-09-13 at 13.23.30_a6b0fde0.jpg",
+    photo: "/WhatsApp Image 2025-09-13 at 13.23.30_a6b0fde0.jpg",
     linkedin: "https://linkedin.com/in/bobsmith",
   },
 ];
@@ -66,7 +65,7 @@ const About = () => {
                 {name}
               </h4>
               <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 flex items-center gap-1">
-                <UserCircle/>
+                <UserCircle />
                 {role}
               </p>
               <a

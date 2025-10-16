@@ -29,12 +29,12 @@ const JobDescription = () => {
       );
 
       if (res.data.success) {
-        setIsApplied(true); // Update the local state
+        setIsApplied(true);
         const updatedSingleJob = {
           ...singleJob,
           applications: [...singleJob.applications, { applicant: user?._id }],
         };
-        dispatch(setSingleJob(updatedSingleJob)); // helps us to real time UI update
+        dispatch(setSingleJob(updatedSingleJob));
         toast.success(res.data.message);
       }
     } catch (error) {
@@ -55,7 +55,7 @@ const JobDescription = () => {
             res.data.job.applications.some(
               (application) => application.applicant === user?._id
             )
-          ); // Ensure the state is in sync with fetched data
+          );
         }
       } catch (error) {
         console.log(error);
@@ -88,7 +88,8 @@ const JobDescription = () => {
             isApplied
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
-          }`}>
+          }`}
+        >
           {isApplied ? "Already Applied" : "Apply Now"}
         </Button>
       </div>

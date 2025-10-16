@@ -12,17 +12,17 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
   const [saved, setSaved] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  // ✅ Removed localStorage.getItem("token")
-
-  // Check saved status only for Jobs page
   useEffect(() => {
     if (isSavedPage) return;
 
     const fetchSavedStatus = async () => {
       try {
-        const res = await axios.get("https://job-portal-website-2025-1.onrender.com/api/savejob", {
-          withCredentials: true, // 🔑 send cookies
-        });
+        const res = await axios.get(
+          "https://job-portal-website-2025-1.onrender.com/api/savejob",
+          {
+            withCredentials: true,
+          }
+        );
 
         const isAlreadySaved = res.data.some((savedJob) => {
           const savedId = savedJob.jobId._id || savedJob.jobId;
@@ -38,24 +38,24 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
     fetchSavedStatus();
   }, [job._id, isSavedPage]);
 
-  // Save / Remove job
   const toggleSave = async () => {
     setLoading(true);
     try {
       if (!saved) {
-        // Save job
         await axios.post(
           "https://job-portal-website-2025-1.onrender.com/api/savejob",
           { jobId: job._id },
-          { withCredentials: true } // 🔑 send cookies
+          { withCredentials: true }
         );
         setSaved(true);
         toast.success("Job saved successfully!");
       } else {
-        // Remove job
-        await axios.delete(`https://job-portal-website-2025-1.onrender.com/api/savejob/${job._id}`, {
-          withCredentials: true, // 🔑 send cookies
-        });
+        await axios.delete(
+          `https://job-portal-website-2025-1.onrender.com/api/savejob/${job._id}`,
+          {
+            withCredentials: true,
+          }
+        );
         setSaved(false);
         toast.success("Job removed from saved list!");
         if (isSavedPage && onRemove) onRemove();
@@ -140,7 +140,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
               try {
                 await axios.delete(
                   `https://job-portal-website-2025-1.onrender.com/api/savejob/${job._id}`,
-                  { withCredentials: true } // 🔑 send cookies
+                  { withCredentials: true }
                 );
                 toast.success("Job removed from saved list!");
                 if (onRemove) onRemove();

@@ -14,7 +14,6 @@ export default function InterviewPage() {
     setLoading(true);
     setQuestions("");
 
-    // show loading toast with spinner
     const toastId = toast.loading(
       <span className="flex items-center gap-2">
         <Loader2 className="animate-spin w-5 h-5 text-blue-500" />
@@ -26,7 +25,6 @@ export default function InterviewPage() {
       const result = await getInterviewQuestions(formData);
       setQuestions(result);
 
-      // success toast
       toast.success(
         <span className="flex items-center gap-2">
           <CheckCircle className="w-5 h-5 text-green-500" />
@@ -36,7 +34,7 @@ export default function InterviewPage() {
       );
     } catch (err) {
       console.error(err);
-      // error toast
+
       toast.error(
         <span className="flex items-center gap-2">
           <XCircle className="w-5 h-5 text-red-500" />
@@ -57,10 +55,8 @@ export default function InterviewPage() {
           AI Mock Interview Preparation
         </h1>
 
-        {/* Show form only if no questions */}
         {!questions && <InterviewForm onSubmit={handleGenerate} />}
 
-        {/* Show results if questions exist */}
         {questions && <InterviewResults questions={questions} />}
       </div>
       <Toaster position="bottom-right" />

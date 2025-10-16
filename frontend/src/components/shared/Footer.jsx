@@ -6,10 +6,10 @@ const Footer = () => {
   return (
    <footer className="bg-gradient-to-r from-gray-800 via-gray-900 to-black text-gray-300 py-12 px-6 mt-20">
   <div className="max-w-7xl mx-auto">
-    {/* Top Grid */}
+
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 border-b border-gray-700 pb-10">
       
-      {/* Brand */}
+
       <div>
         <h2 className="text-3xl font-bold text-white mb-3">DreamDock</h2>
         <p className="text-sm leading-relaxed mb-4">
@@ -20,7 +20,7 @@ const Footer = () => {
         </p>
       </div>
 
-      {/* Navigation */}
+ 
       <div>
         <h3 className="text-lg font-semibold mb-3 text-white">Navigation</h3>
         <ul className="space-y-2 text-sm">
@@ -30,7 +30,6 @@ const Footer = () => {
         </ul>
       </div>
 
-      {/* Contact */}
       <div>
         <h3 className="text-lg font-semibold mb-3 text-white">Contact Us</h3>
         <ul className="space-y-3 text-sm">
@@ -49,7 +48,6 @@ const Footer = () => {
         </ul>
       </div>
 
-      {/* Map */}
       <div>
         <h3 className="text-lg font-semibold mb-3 text-white">Our Location</h3>
         <div className="w-full h-40 md:h-48 rounded-md overflow-hidden shadow-lg ring-1 ring-gray-700">
@@ -65,7 +63,6 @@ const Footer = () => {
       </div>
     </div>
 
-    {/* Social Icons */}
     <div className="mt-8 flex justify-center space-x-6">
       <a href="https://facebook.com" className="hover:text-blue-500 transition" aria-label="Facebook">
         <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
@@ -84,7 +81,6 @@ const Footer = () => {
       </a>
     </div>
 
-    {/* Bottom Credit */}
     <p className="text-center text-gray-500 mt-6 text-sm">
       Designed by: <span className="font-medium text-white">Birendra Singh Dhami</span>
     </p>
