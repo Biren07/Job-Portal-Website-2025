@@ -81,7 +81,8 @@ const UpdateProfileDialog = ({ open, setOpen }) => {
       <Dialog open={open}>
         <DialogContent
           className="sm:max-w-[425px]"
-          onInteractOutside={() => setOpen(false)}>
+          onInteractOutside={() => setOpen(false)}
+        >
           <DialogHeader>
             <DialogTitle>Update Profile</DialogTitle>
           </DialogHeader>

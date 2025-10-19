@@ -8,14 +8,12 @@ const SavedJob = () => {
   const [savedJobs, setSavedJobs] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch all saved jobs
   const fetchSavedJobs = async () => {
     try {
-      const res = await axios.get("https://job-portal-website-2025-1.onrender.com/api/savejob", {
-        withCredentials: true, // 🔑 send cookies with request
+      const res = await axios.get("http://localhost:8000/api/savejob", {
+        withCredentials: true,
       });
 
-      // API returns [{ jobId: {...} }, { jobId: {...} }]
       setSavedJobs(res.data.map((item) => item.jobId));
     } catch (err) {
       console.error(
@@ -32,7 +30,6 @@ const SavedJob = () => {
     fetchSavedJobs();
   }, []);
 
-  // Remove job from UI
   const handleRemove = (jobId) => {
     setSavedJobs((prevJobs) => prevJobs.filter((job) => job._id !== jobId));
   };

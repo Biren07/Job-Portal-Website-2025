@@ -6,7 +6,7 @@ import { setSearchedQuery } from "@/redux/jobSlice";
 import useGetAllJobs from "@/hooks/useGetAllJobs";
 import Chatbot from "./ui/chatBot";
 
-// const randomJobs = [1, 2,45];
+
 
 const Browse = () => {
   useGetAllJobs();

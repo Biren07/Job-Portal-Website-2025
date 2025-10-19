@@ -21,7 +21,6 @@ const HeroSection = () => {
   return (
     <section className="relative bg-gradient-to-b from-white to-gray-50 py-20 px-6 md:px-12 lg:px-20">
       <div className="max-w-6xl mx-auto text-center flex flex-col items-center gap-8">
-      
         <motion.span
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -31,14 +30,18 @@ const HeroSection = () => {
           🚀 No. 1 Dream Dock Job Portal
         </motion.span>
 
-
         <h1 className="text-4xl md:text-6xl font-extrabold leading-tight flex flex-wrap justify-center gap-3">
           {words.map((word, i) => (
             <motion.span
               key={i}
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: i * 0.25, type: "spring", stiffness: 120, damping: 20 }}
+              transition={{
+                delay: i * 0.25,
+                type: "spring",
+                stiffness: 120,
+                damping: 20,
+              }}
               className={
                 word === "Dream" || word === "Jobs"
                   ? "text-[#6A38C2] drop-shadow-sm"
@@ -50,11 +53,10 @@ const HeroSection = () => {
           ))}
         </h1>
 
- 
         <p className="text-gray-600 max-w-2xl text-lg leading-relaxed">
-          Dream Dock is your ultimate career hub — connecting passionate job seekers with
-          world-class employers. Whether you’re starting out or aiming higher, we’ve got the
-          perfect opportunities waiting for you.
+          Dream Dock is your ultimate career hub — connecting passionate job
+          seekers with world-class employers. Whether you’re starting out or
+          aiming higher, we’ve got the perfect opportunities waiting for you.
         </p>
 
         <motion.div
@@ -77,7 +79,6 @@ const HeroSection = () => {
           </Button>
         </motion.div>
       </div>
-
 
       <div className="absolute top-10 left-10 w-32 h-32 bg-indigo-100 rounded-full blur-3xl opacity-40"></div>
       <div className="absolute bottom-10 right-10 w-40 h-40 bg-purple-100 rounded-full blur-3xl opacity-40"></div>

@@ -13,8 +13,6 @@ import { setLoading, setUser } from "@/redux/authSlice";
 import { Loader2 } from "lucide-react";
 // import GoogleButton from "../GoogleButton";
 
-
-
 const Login = () => {
   const [input, setInput] = useState({
     email: "",
@@ -64,12 +62,12 @@ const Login = () => {
           onSubmit={submitHandler}
           className=" md:w-1/3 border border-gray-200 rounded-md p-4 my-10"
         >
-       {/* <GoogleButton/> */}
+          {/* <GoogleButton/> */}
           {/* < className="flex items-center my-4">
             <div className="flex-grow border-t"></div>
             <span className="px-2 text-gray-500 text-sm">OR</span>
             <div className="flex-grow border-t"></div>
-            {/* <GoogleButton/> */ }
+            {/* <GoogleButton/> */}
 
           <h1 className="font-bold text-xl mb-5 text-center">Login</h1>
           <div className="my-2">
@@ -130,7 +128,6 @@ const Login = () => {
             </Button>
           )}
           <span className="text-sm">
-            
             Don't have an account?{" "}
             <Link to="/signup" className="text-blue-600">
               Signup

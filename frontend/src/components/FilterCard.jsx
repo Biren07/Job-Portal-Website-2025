@@ -57,7 +57,9 @@ const Filter = () => {
     setManualLocation("");
     setManualTechnology("");
     setFilters({ location: "", technology: "", experience: "" });
-    dispatch(setSearchedQuery({ location: "", technology: "", experience: "" }));
+    dispatch(
+      setSearchedQuery({ location: "", technology: "", experience: "" })
+    );
   };
 
   useEffect(() => {
@@ -91,12 +93,17 @@ const Filter = () => {
             <h2 className="font-bold text-lg">{data.filterType}</h2>
             <RadioGroup
               value={filters[typeKey]}
-              onValueChange={(value) => handleRadioChange(data.filterType, value)}
+              onValueChange={(value) =>
+                handleRadioChange(data.filterType, value)
+              }
             >
               {data.array.map((item, idx) => {
                 const itemId = `radio-${typeKey}-${idx}`;
                 return (
-                  <div key={itemId} className="flex items-center space-x-2 my-2">
+                  <div
+                    key={itemId}
+                    className="flex items-center space-x-2 my-2"
+                  >
                     <RadioGroupItem value={item} id={itemId} />
                     <label htmlFor={itemId}>{item}</label>
                   </div>

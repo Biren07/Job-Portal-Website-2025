@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -6,12 +6,12 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
-} from '../ui/table';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Edit2, Eye, MoreHorizontal } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+  TableRow,
+} from "../ui/table";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Edit2, Eye, MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const AdminJobsTable = () => {
   const { allAdminJobs, searchJobByText } = useSelector((store) => store.job);
@@ -30,7 +30,9 @@ const AdminJobsTable = () => {
       );
     }
 
-    filtered = filtered.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    filtered = filtered
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setFilterJobs(filtered);
   }, [allAdminJobs, searchJobByText]);
 
@@ -42,10 +44,18 @@ const AdminJobsTable = () => {
         </TableCaption>
         <TableHeader>
           <TableRow className="bg-muted">
-            <TableHead className="text-sm font-semibold text-gray-600">Company Name</TableHead>
-            <TableHead className="text-sm font-semibold text-gray-600">Role</TableHead>
-            <TableHead className="text-sm font-semibold text-gray-600">Date</TableHead>
-            <TableHead className="text-right text-sm font-semibold text-gray-600">Action</TableHead>
+            <TableHead className="text-sm font-semibold text-gray-600">
+              Company Name
+            </TableHead>
+            <TableHead className="text-sm font-semibold text-gray-600">
+              Role
+            </TableHead>
+            <TableHead className="text-sm font-semibold text-gray-600">
+              Date
+            </TableHead>
+            <TableHead className="text-right text-sm font-semibold text-gray-600">
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -55,9 +65,11 @@ const AdminJobsTable = () => {
                 key={job._id}
                 className="transition hover:bg-muted cursor-pointer"
               >
-                <TableCell className="font-medium">{job?.company?.name || 'N/A'}</TableCell>
-                <TableCell>{job?.title || 'N/A'}</TableCell>
-                <TableCell>{job?.createdAt?.split('T')[0] || 'N/A'}</TableCell>
+                <TableCell className="font-medium">
+                  {job?.company?.name || "N/A"}
+                </TableCell>
+                <TableCell>{job?.title || "N/A"}</TableCell>
+                <TableCell>{job?.createdAt?.split("T")[0] || "N/A"}</TableCell>
                 <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger className="hover:text-primary">
@@ -72,7 +84,9 @@ const AdminJobsTable = () => {
                         <span>Edit</span>
                       </div>
                       <div
-                        onClick={() => navigate(`/admin/jobs/${job._id}/applicants`)}
+                        onClick={() =>
+                          navigate(`/admin/jobs/${job._id}/applicants`)
+                        }
                         className="flex items-center gap-2 px-2 py-1 hover:bg-muted rounded cursor-pointer"
                       >
                         <Eye className="w-4" />
@@ -85,7 +99,10 @@ const AdminJobsTable = () => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} className="text-center text-muted-foreground py-4">
+              <TableCell
+                colSpan={4}
+                className="text-center text-muted-foreground py-4"
+              >
                 No jobs found.
               </TableCell>
             </TableRow>

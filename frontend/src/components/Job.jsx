@@ -18,7 +18,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
     const fetchSavedStatus = async () => {
       try {
         const res = await axios.get(
-          "https://job-portal-website-2025-1.onrender.com/api/savejob",
+          "http://localhost:8000/api/savejob",
           {
             withCredentials: true,
           }
@@ -43,7 +43,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
     try {
       if (!saved) {
         await axios.post(
-          "https://job-portal-website-2025-1.onrender.com/api/savejob",
+          "http://localhost:8000/api/savejob",
           { jobId: job._id },
           { withCredentials: true }
         );
@@ -51,7 +51,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
         toast.success("Job saved successfully!");
       } else {
         await axios.delete(
-          `https://job-portal-website-2025-1.onrender.com/api/savejob/${job._id}`,
+          `http://localhost:8000/api/savejob/${job._id}`,
           {
             withCredentials: true,
           }
@@ -139,7 +139,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
             onClick={async () => {
               try {
                 await axios.delete(
-                  `https://job-portal-website-2025-1.onrender.com/api/savejob/${job._id}`,
+                  `http://localhost:8000/api/savejob/${job._id}`,
                   { withCredentials: true }
                 );
                 toast.success("Job removed from saved list!");

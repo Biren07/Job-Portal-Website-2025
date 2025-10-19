@@ -15,7 +15,7 @@ const useGetApplicants = (jobId, token) => {
 
       try {
         const response = await axios.get(
-          `http://localhost:8000/api/application/:id/applicants`, // ✅ matches backend
+          `https://job-portal-website-2025-2.onrender.com/api/application/:id/applicants`,
           {
             headers: {
               Authorization: `Bearer ${token}`, // send JWT if required

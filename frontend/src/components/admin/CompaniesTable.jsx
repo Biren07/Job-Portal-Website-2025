@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableBody,
@@ -6,16 +6,18 @@ import {
   TableCell,
   TableHead,
   TableHeader,
-  TableRow
-} from '../ui/table';
-import { Avatar, AvatarFallback, AvatarImage } from '../ui/avatar';
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover';
-import { Edit2, MoreHorizontal } from 'lucide-react';
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+  TableRow,
+} from "../ui/table";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { Edit2, MoreHorizontal } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const CompaniesTable = () => {
-  const { companies, searchCompanyByText } = useSelector((store) => store.company);
+  const { companies, searchCompanyByText } = useSelector(
+    (store) => store.company
+  );
   const [filterCompany, setFilterCompany] = useState([]);
   const navigate = useNavigate();
 
@@ -29,7 +31,9 @@ const CompaniesTable = () => {
       );
     }
 
-    filtered = filtered.slice().sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    filtered = filtered
+      .slice()
+      .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     setFilterCompany(filtered);
   }, [companies, searchCompanyByText]);
 
@@ -41,10 +45,18 @@ const CompaniesTable = () => {
         </TableCaption>
         <TableHeader>
           <TableRow className="bg-muted">
-            <TableHead className="text-sm text-gray-600 font-semibold">Logo</TableHead>
-            <TableHead className="text-sm text-gray-600 font-semibold">Name</TableHead>
-            <TableHead className="text-sm text-gray-600 font-semibold">Date</TableHead>
-            <TableHead className="text-right text-sm text-gray-600 font-semibold">Action</TableHead>
+            <TableHead className="text-sm text-gray-600 font-semibold">
+              Logo
+            </TableHead>
+            <TableHead className="text-sm text-gray-600 font-semibold">
+              Name
+            </TableHead>
+            <TableHead className="text-sm text-gray-600 font-semibold">
+              Date
+            </TableHead>
+            <TableHead className="text-right text-sm text-gray-600 font-semibold">
+              Action
+            </TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -56,14 +68,16 @@ const CompaniesTable = () => {
               >
                 <TableCell>
                   <Avatar>
-                    <AvatarImage src={company.logo || ''} alt={company.name} />
+                    <AvatarImage src={company.logo || ""} alt={company.name} />
                     <AvatarFallback>
-                      {company.name?.charAt(0).toUpperCase() || '?'}
+                      {company.name?.charAt(0).toUpperCase() || "?"}
                     </AvatarFallback>
                   </Avatar>
                 </TableCell>
                 <TableCell className="font-medium">{company.name}</TableCell>
-                <TableCell>{company.createdAt?.split('T')[0] || 'N/A'}</TableCell>
+                <TableCell>
+                  {company.createdAt?.split("T")[0] || "N/A"}
+                </TableCell>
                 <TableCell className="text-right">
                   <Popover>
                     <PopoverTrigger className="hover:text-primary">
@@ -71,7 +85,9 @@ const CompaniesTable = () => {
                     </PopoverTrigger>
                     <PopoverContent className="w-32 p-2">
                       <div
-                        onClick={() => navigate(`/admin/companies/${company._id}`)}
+                        onClick={() =>
+                          navigate(`/admin/companies/${company._id}`)
+                        }
                         className="flex items-center gap-2 px-2 py-1 hover:bg-muted rounded cursor-pointer"
                       >
                         <Edit2 className="w-4" />
@@ -84,7 +100,10 @@ const CompaniesTable = () => {
             ))
           ) : (
             <TableRow>
-              <TableCell colSpan={4} className="text-center text-muted-foreground py-6">
+              <TableCell
+                colSpan={4}
+                className="text-center text-muted-foreground py-6"
+              >
                 No companies found.
               </TableCell>
             </TableRow>

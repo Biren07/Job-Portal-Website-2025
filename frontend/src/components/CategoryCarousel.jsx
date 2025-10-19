@@ -37,7 +37,8 @@ const CategoryCarousel = () => {
               <Button
                 onClick={() => searchJobHandler(cat)}
                 variant="outline"
-                className="rounded-full">
+                className="rounded-full"
+              >
                 {cat}
               </Button>
             </CarouselItem>

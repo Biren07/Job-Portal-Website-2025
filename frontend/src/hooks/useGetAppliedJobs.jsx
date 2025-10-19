@@ -13,19 +13,15 @@ const useGetAppliedJobs = () => {
         const res = await axios.get(`${APPLICATION_API_END_POINT}/get`, {
           withCredentials: true,
         });
-        console.log("Applied jobs response:", res.data);
-
+        console.log(res.data);
         if (res.data.success) {
-          const jobs = res.data.application || res.data.applications || [];
-          dispatch(setAllAppliedJobs(jobs));
+          dispatch(setAllAppliedJobs(res.data.application));
         }
       } catch (error) {
-        console.error("Error fetching applied jobs:", error);
+        console.log(error);
       }
     };
-
     fetchAppliedJobs();
-  }, [dispatch]);
+  }, []);
 };
-
 export default useGetAppliedJobs;

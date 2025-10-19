@@ -7,7 +7,9 @@ const MessageBubble = ({ sender, text }) => {
   return (
     <div
       className={`max-w-[75%] p-2 rounded-lg ${
-        isUser ? "bg-blue-600 text-white self-end" : "bg-gray-200 text-gray-800 self-start"
+        isUser
+          ? "bg-blue-600 text-white self-end"
+          : "bg-gray-200 text-gray-800 self-start"
       }`}
     >
       {text}
@@ -16,7 +18,9 @@ const MessageBubble = ({ sender, text }) => {
 };
 
 const Chatbot = () => {
-  const [messages, setMessages] = useState([{ sender: "bot", text: "Hi! How can I assist you today?" }]);
+  const [messages, setMessages] = useState([
+    { sender: "bot", text: "Hi! How can I assist you today?" },
+  ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
@@ -30,13 +34,19 @@ const Chatbot = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post("https://job-portal-website-2025-1.onrender.com/api/ai/chat", {
-        userMessage,
-      });
+      const res = await axios.post(
+        "https://job-portal-website-2025-1.onrender.com/api/ai/chat",
+        {
+          userMessage,
+        }
+      );
       const botReply = res.data.reply;
       setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
     } catch (err) {
-      setMessages((prev) => [...prev, { sender: "bot", text: "Oops! Something went wrong." }]);
+      setMessages((prev) => [
+        ...prev,
+        { sender: "bot", text: "Oops! Something went wrong." },
+      ]);
     } finally {
       setLoading(false);
     }
@@ -60,7 +70,11 @@ const Chatbot = () => {
         <div className="w-80 h-96 bg-white shadow-xl rounded-xl flex flex-col overflow-hidden">
           <div className="bg-blue-600 text-white text-lg font-semibold p-3 flex justify-between items-center">
             AI Assistant
-            <button onClick={() => setShow(false)} className="text-white font-bold text-lg" aria-label="Close Chatbot">
+            <button
+              onClick={() => setShow(false)}
+              className="text-white font-bold text-lg"
+              aria-label="Close Chatbot"
+            >
               ×
             </button>
           </div>
@@ -79,7 +93,11 @@ const Chatbot = () => {
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <button onClick={sendMessage} className="text-blue-600 hover:text-blue-800" aria-label="Send Message">
+            <button
+              onClick={sendMessage}
+              className="text-blue-600 hover:text-blue-800"
+              aria-label="Send Message"
+            >
               <Send size={18} />
             </button>
           </div>
