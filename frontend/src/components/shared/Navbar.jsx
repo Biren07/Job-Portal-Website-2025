@@ -1,8 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
-import { LogOut, User2 } from "lucide-react";
+import { LogOut, User2, Menu, X } from "lucide-react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -14,6 +14,7 @@ const Navbar = () => {
   const { user } = useSelector((store) => store.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const logoutHandler = async () => {
     try {
@@ -31,122 +32,54 @@ const Navbar = () => {
     }
   };
 
+  const links = user
+    ? user.role === "recruiter"
+      ? [
+          { name: "Companies", to: "/admin/companies" },
+          { name: "Jobs", to: "/admin/jobs" },
+          { name: "Applications", to: "/admin/jobs/:id/applicants" },
+        ]
+      : [
+          { name: "Home", to: "/" },
+          { name: "Jobs", to: "/jobs" },
+          { name: "Browse", to: "/browse" },
+          { name: "Mock Interview", to: "/mock-interview" },
+          { name: "About us", to: "/about" },
+        ]
+    : [
+        { name: "Home", to: "/" },
+        { name: "Jobs", to: "/jobs" },
+        { name: "Browse", to: "/browse" },
+      ];
+
   return (
-    <div className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500  max-w-300  px-2 mx-auto sm:max-w-4xl sticky top-0 z-50 bg-white dark:bg-gray-900 border-b dark:border-gray-800 shadow-sm transition rounded-lg ">
-      <div className="flex items-center justify-between  h-16  text-gray-800 dark:text-gray-100">
-        <div>
-          <Link
-            to="/"
-            className="text-2xl font-bold hover:opacity-80 transition duration-200"
-          >
-            Dream<span className="text-[#F83002]">Dock</span>
-          </Link>
-        </div>
+    <nav className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500 px-4 sm:px-6 lg:px-8 sticky top-0 z-50 shadow-sm rounded-lg">
+      <div className="max-w-full sm:max-w-4xl mx-auto flex items-center justify-between h-16 text-gray-800 dark:text-gray-100">
+        {/* Logo */}
+        <Link
+          to="/"
+          className="text-2xl font-bold hover:opacity-80 transition duration-200"
+        >
+          Dream<span className="text-[#F83002]">Dock</span>
+        </Link>
 
-        <div className="flex items-center gap-12">
-          <ul className="flex font-medium items-center gap-5">
-            {user ? (
-              user.role === "recruiter" ? (
-                <>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/admin/companies"
-                    >
-                      Companies
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/admin/jobs"
-                    >
-                      Jobs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/admin/jobs/:id/applicants"
-                    >
-                      Applications
-                    </Link>
-                  </li>
-                </>
-              ) : (
-                <>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/"
-                    >
-                      Home
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/jobs"
-                    >
-                      Jobs
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/browse"
-                    >
-                      Browse
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/mock-interview"
-                    >
-                      Mock Interview
-                    </Link>
-                  </li>
-                  <li>
-                    <Link
-                      className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                      to="/about"
-                    >
-                      About us
-                    </Link>
-                  </li>
-                </>
-              )
-            ) : (
-              <>
-                <li>
-                  <Link
-                    className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                    to="/"
-                  >
-                    Home
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                    to="/jobs"
-                  >
-                    Jobs
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
-                    to="/browse"
-                  >
-                    Browse
-                  </Link>
-                </li>
-              </>
-            )}
-          </ul>
+        {/* Desktop Menu */}
+        <ul className="hidden md:flex items-center gap-6 font-medium">
+          {links.map((link) => (
+            <li key={link.name}>
+              <Link
+                to={link.to}
+                className="hover:text-[#F83002] dark:hover:text-[#FF6F61] transition"
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
 
+        {/* Right side: Avatar / Popover + Mobile Menu Button */}
+        <div className="flex items-center gap-4">
+          {/* Avatar / User Popover */}
           <Popover>
             <PopoverTrigger asChild>
               <div className="cursor-pointer hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-700 transition p-1 rounded-full">
@@ -163,7 +96,7 @@ const Navbar = () => {
               </div>
             </PopoverTrigger>
 
-            <PopoverContent className="w-80 dark:bg-gray-800 dark:text-white">
+            <PopoverContent className="max-w-full sm:w-80 dark:bg-gray-800 dark:text-white">
               {!user ? (
                 <div className="flex flex-col gap-2">
                   <Link to="/login">
@@ -217,9 +150,34 @@ const Navbar = () => {
               )}
             </PopoverContent>
           </Popover>
+
+          {/* Mobile Menu Button */}
+          <button
+            className="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+          </button>
         </div>
       </div>
-    </div>
+
+      {/* Mobile Menu */}
+      {mobileMenuOpen && (
+        <ul className="md:hidden flex flex-col gap-3 px-4 pb-4">
+          {links.map((link) => (
+            <li key={link.name}>
+              <Link
+                to={link.to}
+                className="block w-full py-2 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                onClick={() => setMobileMenuOpen(false)}
+              >
+                {link.name}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      )}
+    </nav>
   );
 };
 
