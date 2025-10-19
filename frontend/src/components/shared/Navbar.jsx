@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 import { Button } from "../ui/button";
 import { Avatar, AvatarImage } from "../ui/avatar";
@@ -15,6 +15,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const menuRef = useRef(null);
 
   const logoutHandler = async () => {
     try {
@@ -52,10 +53,21 @@ const Navbar = () => {
         { name: "Browse", to: "/browse" },
       ];
 
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMobileMenuOpen(false);
+      }
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
   return (
     <nav className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500 px-4 sm:px-6 lg:px-8 sticky top-0 z-50 shadow-sm rounded-lg">
       <div className="max-w-full sm:max-w-4xl mx-auto flex items-center justify-between h-16 text-gray-800 dark:text-gray-100">
-        {/* Logo */}
+       
         <Link
           to="/"
           className="text-2xl font-bold hover:opacity-80 transition duration-200"
@@ -63,7 +75,7 @@ const Navbar = () => {
           Dream<span className="text-[#F83002]">Dock</span>
         </Link>
 
-        {/* Desktop Menu */}
+    
         <ul className="hidden md:flex items-center gap-6 font-medium">
           {links.map((link) => (
             <li key={link.name}>
@@ -77,7 +89,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-        {/* Right side: Avatar / Popover + Mobile Menu Button */}
+      
         <div className="flex items-center gap-4">
           {/* Avatar / User Popover */}
           <Popover>
@@ -151,7 +163,6 @@ const Navbar = () => {
             </PopoverContent>
           </Popover>
 
-          {/* Mobile Menu Button */}
           <button
             className="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -161,9 +172,13 @@ const Navbar = () => {
         </div>
       </div>
 
-      {/* Mobile Menu */}
-      {mobileMenuOpen && (
-        <ul className="md:hidden flex flex-col gap-3 px-4 pb-4">
+   
+      <div
+        ref={menuRef}
+        className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg transform transition-transform duration-300 z-50
+        ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
+      >
+        <ul className="flex flex-col gap-3 mt-16 px-4">
           {links.map((link) => (
             <li key={link.name}>
               <Link
@@ -176,6 +191,13 @@ const Navbar = () => {
             </li>
           ))}
         </ul>
+      </div>
+
+      {mobileMenuOpen && (
+        <div
+          className="fixed inset-0 bg-black bg-opacity-30 z-40"
+          onClick={() => setMobileMenuOpen(false)}
+        ></div>
       )}
     </nav>
   );
