@@ -1,6 +1,7 @@
 import express from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import bodyParser from "body-parser"
 import dotenv from "dotenv";
 import connectDB from "./config/db.js";
 import userRoute from "./routes/userRoute.js";
@@ -15,6 +16,7 @@ const app = express();
 
 // middleware
 app.use(express.json());
+app.use(bodyParser.urlencoded({extended:true}))
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(cors({
