@@ -10,7 +10,7 @@ const SavedJob = () => {
 
   const fetchSavedJobs = async () => {
     try {
-      const res = await axios.get("http://localhost:8000/api/savejob", {
+      const res = await axios.get("https://job-portal-website-2025-3.onrender.com/api/savejob", {
         withCredentials: true,
       });
 
