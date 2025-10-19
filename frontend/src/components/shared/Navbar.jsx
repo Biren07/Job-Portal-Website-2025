@@ -53,7 +53,6 @@ const Navbar = () => {
         { name: "Browse", to: "/browse" },
       ];
 
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -67,7 +66,6 @@ const Navbar = () => {
   return (
     <nav className="bg-gradient-to-r from-blue-500 via-blue-300 to-yellow-500 px-4 sm:px-6 lg:px-8 sticky top-0 z-50 shadow-sm rounded-lg">
       <div className="max-w-full sm:max-w-4xl mx-auto flex items-center justify-between h-16 text-gray-800 dark:text-gray-100">
-       
         <Link
           to="/"
           className="text-2xl font-bold hover:opacity-80 transition duration-200"
@@ -75,7 +73,6 @@ const Navbar = () => {
           Dream<span className="text-[#F83002]">Dock</span>
         </Link>
 
-    
         <ul className="hidden md:flex items-center gap-6 font-medium">
           {links.map((link) => (
             <li key={link.name}>
@@ -89,9 +86,7 @@ const Navbar = () => {
           ))}
         </ul>
 
-      
         <div className="flex items-center gap-4">
-          {/* Avatar / User Popover */}
           <Popover>
             <PopoverTrigger asChild>
               <div className="cursor-pointer hover:ring-2 hover:ring-gray-200 dark:hover:ring-gray-700 transition p-1 rounded-full">
@@ -167,18 +162,26 @@ const Navbar = () => {
             className="md:hidden p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+            <Menu className="w-6 h-6" />
           </button>
         </div>
       </div>
 
-   
       <div
         ref={menuRef}
         className={`fixed top-0 right-0 h-full w-64 bg-white dark:bg-gray-900 shadow-lg transform transition-transform duration-300 z-50
         ${mobileMenuOpen ? "translate-x-0" : "translate-x-full"}`}
       >
-        <ul className="flex flex-col gap-3 mt-16 px-4">
+        <div className="flex justify-end p-4">
+          <button
+            onClick={() => setMobileMenuOpen(false)}
+            className="p-2 rounded-md hover:bg-gray-200 dark:hover:bg-gray-700 transition"
+          >
+            <X className="w-6 h-6" />
+          </button>
+        </div>
+
+        <ul className="flex flex-col gap-3 mt-4 px-4">
           {links.map((link) => (
             <li key={link.name}>
               <Link
