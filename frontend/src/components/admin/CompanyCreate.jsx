@@ -12,20 +12,25 @@ import { setSingleCompany } from "@/redux/companySlice";
 
 const CompanyCreate = () => {
   const navigate = useNavigate();
-  const [companyName, setCompanyName] = useState();
+  const [companyName, setCompanyName] = useState("");
   const dispatch = useDispatch();
+
   const registerNewCompany = async () => {
+    if (!companyName.trim()) {
+      toast.error("Company name cannot be empty!");
+      return;
+    }
+
     try {
       const res = await axios.post(
         `${COMPANY_API_END_POINT}/register`,
         { companyName },
         {
-          headers: {
-            "Content-Type": "application/json",
-          },
+          headers: { "Content-Type": "application/json" },
           withCredentials: true,
         }
       );
+
       if (res?.data?.success) {
         dispatch(setSingleCompany(res.data.company));
         toast.success(res.data.message);
@@ -33,36 +38,51 @@ const CompanyCreate = () => {
         navigate(`/admin/companies/${companyId}`);
       }
     } catch (error) {
-      console.log(error);
+      console.error(error);
+      toast.error("Failed to register company.");
     }
   };
+
   return (
-    <div>
+    <div className="min-h-screen bg-gray-50">
       <Navbar />
-      <div className="max-w-4xl mx-auto">
-        <div className="my-10">
-          <h1 className="font-bold text-2xl">Your Company Name</h1>
-          <p className="text-gray-500">
-            What would you like to give your company name? you can change this
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        <div className="mb-6 text-center sm:text-left">
+          <h1 className="font-bold text-3xl sm:text-4xl mb-2">
+            Your Company Name
+          </h1>
+          <p className="text-gray-500 text-sm sm:text-base">
+            What would you like to give your company name? You can change this
             later.
           </p>
         </div>
 
-        <Label>Company Name</Label>
-        <Input
-          type="text"
-          className="my-2"
-          placeholder="JobHunt, Microsoft etc."
-          onChange={(e) => setCompanyName(e.target.value)}
-        />
-        <div className="flex items-center gap-2 my-10">
-          <Button
-            variant="outline"
-            onClick={() => navigate("/admin/companies")}
-          >
-            Cancel
-          </Button>
-          <Button onClick={registerNewCompany}>Continue</Button>
+        <div className="flex flex-col gap-4">
+          <Label htmlFor="companyName">Company Name</Label>
+          <Input
+            id="companyName"
+            type="text"
+            placeholder="JobHunt, Microsoft etc."
+            value={companyName}
+            onChange={(e) => setCompanyName(e.target.value)}
+            className="w-full"
+          />
+
+          <div className="flex flex-col sm:flex-row items-center gap-4 mt-6">
+            <Button
+              variant="outline"
+              className="w-full sm:w-auto"
+              onClick={() => navigate("/admin/companies")}
+            >
+              Cancel
+            </Button>
+            <Button
+              className="w-full sm:w-auto"
+              onClick={registerNewCompany}
+            >
+              Continue
+            </Button>
+          </div>
         </div>
       </div>
     </div>

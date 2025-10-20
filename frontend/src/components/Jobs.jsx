@@ -4,10 +4,13 @@ import FilterCard from "./FilterCard";
 import Job from "./Job";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { Button } from "./ui/button";
+import { SlidersHorizontal } from "lucide-react";
 
 const Jobs = () => {
   const { allJobs, searchedQuery } = useSelector((store) => store.job);
   const [filterJobs, setFilterJobs] = useState(allJobs);
+  const [showFilters, setShowFilters] = useState(false);
 
   useEffect(() => {
     if (!searchedQuery) {
@@ -24,7 +27,6 @@ const Jobs = () => {
 
       const matchTechnology = (() => {
         if (!searchedQuery.technology) return true;
-
         const input = searchedQuery.technology.trim().toLowerCase();
 
         if (Array.isArray(job.title)) {
@@ -61,26 +63,57 @@ const Jobs = () => {
   }, [allJobs, searchedQuery]);
 
   return (
-    <div>
+    <div className="bg-gray-50 min-h-screen">
       <Navbar />
-      <div className="max-w-7xl mx-auto mt-5 flex gap-5 h-[88vh]">
-        <div className="w-1/5 h-full overflow-y-auto bg-white rounded-md shadow-md p-4">
+
+    
+      <div className="max-w-7xl mx-auto mt-5 px-4 sm:px-6 md:px-10 flex items-center justify-between">
+        <h1 className="text-lg md:text-2xl font-semibold text-gray-800">
+          Available Jobs ({filterJobs.length})
+        </h1>
+
+        <Button
+          variant="outline"
+          className="flex items-center gap-2 sm:hidden border border-gray-300"
+          onClick={() => setShowFilters(!showFilters)}
+        >
+          <SlidersHorizontal size={18} /> Filters
+        </Button>
+      </div>
+
+      <div className="max-w-7xl mx-auto mt-5 flex flex-col sm:flex-row gap-5 px-4 sm:px-6 md:px-10">
+        
+        <div
+          className={`${
+            showFilters ? "block" : "hidden"
+          } sm:block w-full sm:w-1/4 h-full bg-white rounded-md shadow-md p-4 transition-all`}
+        >
           <FilterCard />
         </div>
 
+       
         <div className="flex-1 overflow-y-auto">
           {filterJobs.length === 0 ? (
-            <span>No jobs found</span>
+            <span className="text-gray-500">No jobs found</span>
           ) : (
-            <div className="grid grid-cols-3 gap-6 md:grid-cols-2 sm:grid-cols-1">
+            <div
+              className="
+                grid
+                grid-cols-1 
+                sm:grid-cols-2 
+                md:grid-cols-3 
+                lg:grid-cols-3 
+                xl:grid-cols-4 
+                gap-6
+              "
+            >
               {filterJobs.map((job) => (
                 <motion.div
                   key={job._id}
-                  initial={{ opacity: 0, x: 100 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  exit={{ opacity: 0, x: -100 }}
+                  initial={{ opacity: 0, y: 50 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -50 }}
                   transition={{ duration: 0.3 }}
-                  className="h-full"
                 >
                   <Job job={job} />
                 </motion.div>

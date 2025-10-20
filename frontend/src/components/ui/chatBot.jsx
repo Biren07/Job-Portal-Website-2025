@@ -6,7 +6,7 @@ const MessageBubble = ({ sender, text }) => {
   const isUser = sender === "user";
   return (
     <div
-      className={`max-w-[75%] p-2 rounded-lg ${
+      className={`max-w-[75%] p-2 rounded-lg break-words ${
         isUser
           ? "bg-blue-600 text-white self-end"
           : "bg-gray-200 text-gray-800 self-start"
@@ -35,10 +35,8 @@ const Chatbot = () => {
 
     try {
       const res = await axios.post(
-        "https://job-portal-website-2025-1.onrender.com/api/ai/chat",
-        {
-          userMessage,
-        }
+        "https://job-portal-website-2025-3.onrender.com/api/ai/chat",
+        { userMessage }
       );
       const botReply = res.data.reply;
       setMessages((prev) => [...prev, { sender: "bot", text: botReply }]);
@@ -57,7 +55,7 @@ const Chatbot = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 z-50">
       {!show ? (
         <button
           className="bg-blue-600 text-white p-4 rounded-full shadow-lg hover:bg-blue-700 transition"
@@ -67,7 +65,7 @@ const Chatbot = () => {
           <Bot />
         </button>
       ) : (
-        <div className="w-80 h-96 bg-white shadow-xl rounded-xl flex flex-col overflow-hidden">
+        <div className="w-full max-w-sm sm:max-w-xs md:max-w-sm h-[400px] sm:h-96 bg-white shadow-xl rounded-xl flex flex-col overflow-hidden">
           <div className="bg-blue-600 text-white text-lg font-semibold p-3 flex justify-between items-center">
             AI Assistant
             <button
