@@ -11,38 +11,39 @@ import { toast } from "sonner";
 const JobDescription = () => {
   const { singleJob } = useSelector((store) => store.job);
   const { user } = useSelector((store) => store.auth);
-  const isIntiallyApplied =
-    singleJob?.applications?.some(
-      (application) => application.applicant === user?._id
-    ) || false;
-  const [isApplied, setIsApplied] = useState(isIntiallyApplied);
-
   const params = useParams();
   const jobId = params.id;
   const dispatch = useDispatch();
 
+  const isInitiallyApplied = singleJob?.applications?.some(
+    (application) => application.applicant === user?._id
+  ) || false;
+
+  const [isApplied, setIsApplied] = useState(isInitiallyApplied);
+
+  // Apply job handler
   const applyJobHandler = async () => {
     try {
-      const res = await axios.get(
-        `${APPLICATION_API_END_POINT}/apply/${jobId}`,
-        { withCredentials: true }
-      );
+      const res = await axios.get(`${APPLICATION_API_END_POINT}/apply/${jobId}`, {
+        withCredentials: true,
+      });
 
       if (res.data.success) {
         setIsApplied(true);
         const updatedSingleJob = {
           ...singleJob,
-          applications: [...singleJob.applications, { applicant: user?._id }],
+          applications: [...(singleJob?.applications || []), { applicant: user?._id }],
         };
         dispatch(setSingleJob(updatedSingleJob));
         toast.success(res.data.message);
       }
     } catch (error) {
-      console.log(error);
-      toast.error(error.response.data.message);
+      console.error(error);
+      toast.error(error.response?.data?.message || "Failed to apply.");
     }
   };
 
+  // Fetch single job details
   useEffect(() => {
     const fetchSingleJob = async () => {
       try {
@@ -52,39 +53,41 @@ const JobDescription = () => {
         if (res.data.success) {
           dispatch(setSingleJob(res.data.job));
           setIsApplied(
-            res.data.job.applications.some(
+            res.data.job?.applications?.some(
               (application) => application.applicant === user?._id
-            )
+            ) || false
           );
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     };
+
     fetchSingleJob();
   }, [jobId, dispatch, user?._id]);
 
   return (
-    <div className="max-w-7xl mx-auto my-10">
-      <div className="flex items-center justify-between">
+    <div className="max-w-3xl mx-auto my-6 px-4 sm:px-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="font-bold text-xl">{singleJob?.title}</h1>
-          <div className="flex items-center gap-2 mt-4">
-            <Badge className={"text-blue-700 font-bold"} variant="ghost">
-              {singleJob?.postion} Positions
+          <h1 className="text-2xl font-bold">{singleJob?.title}</h1>
+          <div className="flex flex-wrap gap-2 mt-3">
+            <Badge variant="ghost" className="text-blue-700 font-bold">
+              {singleJob?.position || 0} Positions
             </Badge>
-            <Badge className={"text-[#F83002] font-bold"} variant="ghost">
-              {singleJob?.jobType}
+            <Badge variant="ghost" className="text-[#F83002] font-bold">
+              {singleJob?.jobType || "N/A"}
             </Badge>
-            <Badge className={"text-[#7209b7] font-bold"} variant="ghost">
-              {singleJob?.salary}LPA
+            <Badge variant="ghost" className="text-[#7209b7] font-bold">
+              {singleJob?.salary || "N/A"} LPA
             </Badge>
           </div>
         </div>
         <Button
           onClick={isApplied ? null : applyJobHandler}
           disabled={isApplied}
-          className={`rounded-lg ${
+          className={`mt-2 sm:mt-0 rounded-lg ${
             isApplied
               ? "bg-gray-600 cursor-not-allowed"
               : "bg-[#7209b7] hover:bg-[#5f32ad]"
@@ -93,52 +96,23 @@ const JobDescription = () => {
           {isApplied ? "Already Applied" : "Apply Now"}
         </Button>
       </div>
-      <h1 className="border-b-2 border-b-gray-300 font-medium py-4">
-        Job Description
-      </h1>
-      <div className="my-4">
-        <h1 className="font-bold my-1">
-          Role:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.title}
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Location:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.location}
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Description:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.description}
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Experience:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.experience} yrs
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Salary:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.salary}LPA
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Total Applicants:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.applications?.length}
-          </span>
-        </h1>
-        <h1 className="font-bold my-1">
-          Posted Date:{" "}
-          <span className="pl-4 font-normal text-gray-800">
-            {singleJob?.createdAt.split("T")[0]}
-          </span>
-        </h1>
+
+      {/* Job Details */}
+      <div className="mt-6 space-y-3">
+        {[
+          { label: "Role", value: singleJob?.title },
+          { label: "Location", value: singleJob?.location },
+          { label: "Description", value: singleJob?.description },
+          { label: "Experience", value: singleJob?.experience ? `${singleJob.experience} yrs` : "N/A" },
+          { label: "Salary", value: singleJob?.salary ? `${singleJob.salary} LPA` : "N/A" },
+          { label: "Total Applicants", value: singleJob?.applications?.length || 0 },
+          { label: "Posted Date", value: singleJob?.createdAt?.split("T")[0] || "N/A" },
+        ].map((item, idx) => (
+          <div key={idx} className="flex flex-col sm:flex-row sm:gap-2">
+            <span className="font-bold">{item.label}:</span>
+            <span className="pl-2 text-gray-800">{item.value}</span>
+          </div>
+        ))}
       </div>
     </div>
   );

@@ -13,17 +13,23 @@ const Home = () => {
   useGetAllJobs();
   const { user } = useSelector((store) => store.auth);
   const navigate = useNavigate();
+
   useEffect(() => {
     if (user?.role === "recruiter") {
       navigate("/admin/companies");
     }
-  }, []);
+  }, [user, navigate]); 
+
   return (
-    <div>
+    <div className="min-h-screen flex flex-col">
       <Navbar />
-      <HeroSection />
-      <CategoryCarousel />
-      <LatestJobs />
+      <main className="flex-1">
+        <HeroSection />
+        <div className="px-4 sm:px-6 md:px-12 lg:px-20">
+          <CategoryCarousel />
+          <LatestJobs />
+        </div>
+      </main>
       <Chatbot />
       <Footer />
     </div>
