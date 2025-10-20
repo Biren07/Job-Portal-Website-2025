@@ -12,7 +12,7 @@ const developers = [
   {
     name: "Ramesh Saud",
     role: "Web Designer",
-    photo: "/WhatsApp Image 2025-09-13 at 13.23.30_a6b0fde0.jpg",
+    photo: "/Ramesh Saud.png",
     linkedin: "https://linkedin.com/in/bobsmith",
   },
 ];
