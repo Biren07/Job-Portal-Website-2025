@@ -68,8 +68,16 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
     Math.floor((new Date() - new Date(time)) / (1000 * 60 * 60 * 24));
 
   return (
-    <div className="p-4 sm:p-6 rounded-xl shadow-md hover:shadow-lg bg-white border border-gray-100 transition duration-300 flex flex-col justify-between">
- 
+    <div className="
+      p-4 sm:p-5 md:p-4 
+      rounded-xl 
+      shadow-md hover:shadow-lg 
+      bg-white border border-gray-100 
+      transition duration-300 
+      flex flex-col justify-between 
+      h-full
+    ">
+      {/* Top Row */}
       <div className="flex items-center justify-between mb-2">
         <p className="text-xs sm:text-sm text-gray-500">
           {daysAgo(job?.createdAt) === 0
@@ -80,7 +88,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
         {!isSavedPage && (
           <Button
             variant="outline"
-            className="rounded-full w-8 h-8 sm:w-9 sm:h-9"
+            className="rounded-full w-8 h-8 sm:w-9 sm:h-9 flex items-center justify-center"
             size="icon"
             onClick={toggleSave}
             disabled={loading}
@@ -94,23 +102,24 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
         )}
       </div>
 
-     
+      {/* Company Info */}
       <div className="flex items-center gap-3 sm:gap-4 mb-3 sm:mb-4">
-        <div className="p-2 sm:p-3 border rounded-full">
+        <div className="p-2 sm:p-3 border rounded-full flex-shrink-0">
           <Avatar className="w-10 h-10 sm:w-12 sm:h-12">
             <AvatarImage src={job?.company?.logo} />
           </Avatar>
         </div>
-        <div>
-          <h1 className="font-semibold text-base sm:text-lg md:text-xl">
+        <div className="min-w-0">
+          <h1 className="font-semibold text-base sm:text-lg truncate">
             {job?.company?.name}
           </h1>
+          <p className="text-xs text-gray-500 truncate">{job?.location}</p>
         </div>
       </div>
 
-      
-      <div>
-        <h1 className="font-bold text-base sm:text-lg md:text-xl mb-2 text-gray-800">
+      {/* Job Title & Description */}
+      <div className="flex-1">
+        <h1 className="font-bold text-base sm:text-lg md:text-xl mb-2 text-gray-800 leading-tight">
           {job?.title}
         </h1>
         <p className="text-xs sm:text-sm text-gray-600 line-clamp-3">
@@ -118,32 +127,32 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
         </p>
       </div>
 
-     
+      {/* Badges */}
       <div className="flex flex-wrap items-center gap-2 mt-3 sm:mt-4">
-        <Badge className="text-blue-700 font-bold text-xs sm:text-sm" variant="ghost">
+        <Badge className="text-blue-700 font-medium text-xs sm:text-sm" variant="ghost">
           {job?.position} Positions
         </Badge>
-        <Badge className="text-[#F83002] font-bold text-xs sm:text-sm" variant="ghost">
+        <Badge className="text-[#F83002] font-medium text-xs sm:text-sm" variant="ghost">
           {job?.jobType}
         </Badge>
-        <Badge className="text-[#7209b7] font-bold text-xs sm:text-sm" variant="ghost">
+        <Badge className="text-[#7209b7] font-medium text-xs sm:text-sm" variant="ghost">
           {job?.salary} LPA
         </Badge>
       </div>
 
-     
-      <div className="flex flex-col sm:flex-row sm:items-center sm:gap-4 mt-4">
+      {/* Buttons */}
+      <div className="flex flex-col sm:flex-row sm:items-center gap-3 mt-4">
         <Button
           onClick={() => navigate(`/description/${job?._id}`)}
           variant="outline"
-          className="w-full sm:w-auto mb-2 sm:mb-0"
+          className="w-full sm:w-auto"
         >
           Details
         </Button>
 
         {isSavedPage ? (
           <Button
-            className="bg-red-600 text-white w-full sm:w-auto"
+            className="bg-red-600 text-white w-full sm:w-auto hover:bg-red-700 transition"
             onClick={async () => {
               try {
                 await axios.delete(`${API_BASE}/savejob/${job._id}`, {
@@ -152,10 +161,7 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
                 toast.success("Job removed from saved list!");
                 if (onRemove) onRemove();
               } catch (err) {
-                console.error(
-                  "Remove saved job error:",
-                  err.response?.data || err.message
-                );
+                console.error("Remove saved job error:", err);
                 toast.error(
                   err.response?.data?.message || "Failed to remove job."
                 );
@@ -163,15 +169,21 @@ const Job = ({ job, isSavedPage = false, onRemove }) => {
             }}
             disabled={loading}
           >
-            {loading ? "Processing..." : <span className="flex items-center gap-2"><Trash2 size={16} /> Remove</span>}
+            {loading ? (
+              "Processing..."
+            ) : (
+              <span className="flex items-center gap-2">
+                <Trash2 size={16} /> Remove
+              </span>
+            )}
           </Button>
         ) : (
           <Button
-            className="bg-[#7209b7] text-white w-full sm:w-auto"
+            className="bg-[#7209b7] text-white w-full sm:w-auto hover:bg-[#5e0995] transition"
             onClick={toggleSave}
             disabled={loading}
           >
-            {loading ? "Processing..." : saved ? "Saved" : "Save For Later"}
+            {loading ? "Processing..." : saved ? "Saved" : "Save Job"}
           </Button>
         )}
       </div>
