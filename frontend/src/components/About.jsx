@@ -1,6 +1,7 @@
 import { Linkedin, UserCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import Navbar from "./shared/Navbar";
+import Footer from "./shared/Footer";
 
 const developers = [
   {
@@ -8,13 +9,7 @@ const developers = [
     role: "MERN Stack Developer",
     photo: "/Birendra Dhami.png",
     linkedin: "https://www.linkedin.com/in/birendra-c-ingh-dhami-6264b7279/",
-  },
-  {
-    name: "Ramesh Saud",
-    role: "Web Designer",
-    photo: "/Ramesh Saud.png",
-    linkedin: "https://linkedin.com/in/bobsmith",
-  },
+  }
 ];
 
 const About = () => {
@@ -81,6 +76,7 @@ const About = () => {
           ))}
         </div>
       </section>
+      <Footer/>
     </>
   );
 };

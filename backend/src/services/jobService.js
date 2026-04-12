@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 import { Job } from "../models/job.js";
-import chatGemini from "../utils/chatGemini.js";
+import chatWithGroq from "../utils/chatGroq.js";
 
 // Create a new job with AI-generated short description
 
@@ -8,7 +8,7 @@ export const createJob = async (userId, data) => {
   const { title, requirements, salary, location, jobType, experienceLevel, position, companyId } = data;
 
   // Generate AI short description
-  const shortDescription = await chatGemini(`Generate a concise 40-word job description for: "${title}"`);
+  const shortDescription = await chatWithGroq(`Generate a concise 40-word job description for: "${title}"`);
 
    const formattedRequirements = Array.isArray(requirements)
     ? requirements.map(r => r.trim())

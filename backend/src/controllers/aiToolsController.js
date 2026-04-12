@@ -1,5 +1,5 @@
-import chatGemini from "../utils/chatGemini.js";
-import generateInterviewQuestions from "../utils/interviewGemini.js";
+import chatWithGroq from "../utils/chatGroq.js";
+import generateInterviewQuestions from "../utils/interviewGroq.js";
 
 export const startInterview = async (req, res) => {
   const { role, skills, bio } = req.body;
@@ -18,7 +18,7 @@ export const startInterview = async (req, res) => {
 
     res.json({ questions: questionsText });
   } catch (error) {
-    console.error("Gemini API error details:", {
+    console.error("Groq API error details:", {
       message: error.message,
       responseData: error.response?.data,
       stack: error.stack,
@@ -37,7 +37,7 @@ export const chatWithAI = async (req, res) => {
   try {
     const prompt = `You are a helpful assistant. Answer this: ${userMessage}`;
 
-    const aiResponse = await chatGemini(prompt);
+    const aiResponse = await chatWithGroq(prompt);
 
     res.json({ reply: aiResponse });
   } catch (error) {

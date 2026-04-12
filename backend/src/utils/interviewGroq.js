@@ -1,4 +1,4 @@
-import chatGemini from "./chatGemini.js";
+import chatWithGroq from "../utils/chatGroq.js";
 
 const generateInterviewQuestions = async ({ role, skills, bio }) => {
   try {
@@ -9,9 +9,8 @@ const generateInterviewQuestions = async ({ role, skills, bio }) => {
       Provide concise, clear questions.
     `;
 
-    const response = await chatGemini(prompt);
+    const response = await chatWithGroq(prompt);
 
-    // Split response by newlines if Gemini returns a numbered list
     const questionsArray = response.split("\n").filter((q) => q.trim() !== "");
 
     return questionsArray;
